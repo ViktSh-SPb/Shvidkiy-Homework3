@@ -1,6 +1,5 @@
 package org.viktsh;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MainClass {
     public static void main( String[] args )
     {
-        Path inputFile = Paths.get("files", "input_file.txt");
+        Path inputFile = Paths.get("files", "input_file_english.txt");
         Path reportAlph= Paths.get("files","report_by_alph.txt");
         Path reportFreq = Paths.get("files","report_by_freq.txt");
         Map<String, Integer> words = new HashMap<>();
