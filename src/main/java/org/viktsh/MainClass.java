@@ -27,7 +27,7 @@ public class MainClass {
                     .map(line-> Arrays.stream(line.split("\\s+")))
                     .flatMap(word->word)
                     .map(word->word.replaceAll("[^А-Яа-яёЁ-]", ""))
-                    .filter(word -> word.matches("[А-Яа-яёЁ-]+"))
+                    .filter(word -> word.matches("[А-Яа-яёЁ]+(-[А-Яа-яёЁ]+)*"))
                     .map(String::toLowerCase)
                     .forEach(word->{
                         words.put(word, words.getOrDefault(word, 0)+1);
