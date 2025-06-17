@@ -12,20 +12,26 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Класс {@code MainClass} Выполняет построение частотного словаря.
+ * Вычисляет частоту используемых русских слов в заданном тексте.
+ * Обрабатываемый текст загружается из данных текстового файла: {@code files/input_file.txt}
+ * В результате вычислений формируются два отчета, представленных в файлах: {@code files/report_by_alph.txt},
+ * {@code files/report_by_freq.txt}, содержащие данные: слова, их частоту (сколько раз слово встретилось в тексте) и
+ * относительную частоту (отношение абсолютной частоты к общему количеству слов в тексте).
+ * Для проверки исключений в программу включен файл {@code files/input_file_english.txt}, не содержащий русских слов.
  * @author Viktor Shvidkiy
  */
 public class MainClass {
     public static void main( String[] args )
     {
-        Path inputFile = Paths.get("files", "input_file_english.txt");
+        Path inputFile = Paths.get("files", "input_file.txt");
         Path reportAlph= Paths.get("files","report_by_alph.txt");
         Path reportFreq = Paths.get("files","report_by_freq.txt");
         Map<String, Integer> words = new HashMap<>();
         AtomicInteger totalWordCount = new AtomicInteger();
         try {
             Files.lines(inputFile)
-                    .map(line-> Arrays.stream(line.split("\\s+")))
-                    .flatMap(word->word)
+                    .flatMap(line->Arrays.stream(line.split("\\s+")))
                     .map(word->word.replaceAll("[^А-Яа-яёЁ-]", ""))
                     .filter(word -> word.matches("[А-Яа-яёЁ]+(-[А-Яа-яёЁ]+)*"))
                     .map(String::toLowerCase)
