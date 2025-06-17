@@ -33,9 +33,10 @@ public class MainClass {
                         words.put(word, words.getOrDefault(word, 0)+1);
                         totalWordCount.incrementAndGet();
                     });
+            if(totalWordCount.get()==0) throw new CustomWordsException("Не найдено русских слов");
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new CustomWordsException("Ошибка чтения файла",e);
         }
 
         try (PrintWriter pw = new PrintWriter(reportAlph.toFile())){
@@ -45,7 +46,7 @@ public class MainClass {
                     .sorted(Map.Entry.comparingByKey())
                     .forEach(entry->pw.printf("%-20s | %-7s | %-8.6f%%\n",entry.getKey(), entry.getValue()+" раз", (double)entry.getValue()*100/totalWordCount.get()));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new CustomWordsException("Ошибка записи файла report_by_alph",e);
         }
 
         try (PrintWriter pw = new PrintWriter(reportFreq.toFile())){
@@ -58,7 +59,7 @@ public class MainClass {
                     })
                     .forEach(entry->pw.printf("%-20s | %-7s | %-8.6f%%\n",entry.getKey(), entry.getValue()+" раз", (double)entry.getValue()*100/totalWordCount.get()));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new CustomWordsException("Ошибка записи файла report_by_freq", e);
         }
     }
 }
